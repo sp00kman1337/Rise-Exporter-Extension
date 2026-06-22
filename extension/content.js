@@ -184,26 +184,13 @@
   }
 
   // ── FORMAT HELPERS ───────────────────────────────────────────────────────────
-  const getCurrentFormat = () => {
-    const s = st();
-    return (s.exportFormats || ['web'])[s.currentFormatIndex || 0] || 'web';
-  };
+  const getCurrentFormat = () => st().exportFormats?.[0] || 'web';
 
   function advanceAfterExport(succeeded) {
     const s = st();
-    const formats = s.exportFormats || ['web'];
-    const fmtIdx = s.currentFormatIndex || 0;
-    const updates = { phase: PHASE.BACK_TO_FOLDER };
-
+    const updates = { phase: PHASE.BACK_TO_FOLDER, currentCourseIndex: s.currentCourseIndex + 1 };
     if (succeeded) updates.totalExported = s.totalExported + 1;
     else           updates.totalFailed   = s.totalFailed + 1;
-
-    if (fmtIdx + 1 < formats.length) {
-      updates.currentFormatIndex = fmtIdx + 1;
-    } else {
-      updates.currentFormatIndex = 0;
-      updates.currentCourseIndex = s.currentCourseIndex + 1;
-    }
     return updates;
   }
 
@@ -386,7 +373,7 @@
         return;
       } catch (err) {
         log(`  ✗ Error: ${err.message}`, 'error');
-        st({ currentCourseIndex: ++idx, currentFormatIndex: 0, totalFailed: st().totalFailed + 1 });
+        st({ currentCourseIndex: ++idx, totalFailed: st().totalFailed + 1 });
         await sleep(DELAYS.betweenFolders);
       }
     }
@@ -412,7 +399,7 @@
         return;
       }
       log(`  Could not find folder "${target.name}" — skipping`, 'error');
-      st({ currentFolderIndex: ++idx, currentCourseIndex: 0, currentFormatIndex: 0 });
+      st({ currentFolderIndex: ++idx, currentCourseIndex: 0 });
     }
 
     log('No more folders to process', 'warn');
@@ -434,7 +421,7 @@
     }
 
     log(`📂 Next folder: "${s.selectedFolders[nextIdx].name}"`, 'info');
-    st({ currentFolderIndex: nextIdx, currentCourseIndex: 0, currentFormatIndex: 0, phase: PHASE.ENTERING_SUBFOLDER });
+    st({ currentFolderIndex: nextIdx, currentCourseIndex: 0, phase: PHASE.ENTERING_SUBFOLDER });
     if (s.parentFolderUrl) safeNavigate(s.parentFolderUrl);
   }
 
@@ -443,8 +430,7 @@
     const selectedNames = [...document.querySelectorAll('.rbe-folder-cb:checked')].map(cb => cb.value);
     if (!selectedNames.length) { log('No folders selected!', 'error'); return; }
 
-    const formatChoice = document.querySelector('input[name="rbe-format"]:checked')?.value || 'web';
-    const exportFormats = formatChoice === 'both' ? ['web', 'lms'] : [formatChoice];
+    const exportFormats = [document.querySelector('input[name="rbe-format"]:checked')?.value || 'web'];
 
     const selectedFolders = scanFolders()
       .filter(f => selectedNames.includes(f.name))
@@ -456,7 +442,7 @@
     st({
       phase: PHASE.ENTERING_SUBFOLDER, active: true, exportFormats,
       parentFolderUrl: window.location.href, selectedFolders,
-      currentFolderIndex: 0, currentCourseIndex: 0, currentFormatIndex: 0,
+      currentFolderIndex: 0, currentCourseIndex: 0,
       totalExported: 0, totalFailed: 0,
     });
     document.body.classList.add('rbe-export-active');
@@ -497,7 +483,6 @@
           <div class="rbe-radio-group">
             <label class="rbe-check"><input type="radio" name="rbe-format" id="rbe-fmt-web" value="web" checked><span>Web (HTML)</span></label>
             <label class="rbe-check"><input type="radio" name="rbe-format" id="rbe-fmt-lms" value="lms"><span>LMS (SCORM)</span></label>
-            <label class="rbe-check"><input type="radio" name="rbe-format" id="rbe-fmt-both" value="both"><span>Both</span></label>
           </div>
         </div>
         <div class="rbe-section rbe-action-row">
@@ -592,7 +577,7 @@
     console.log('[Rise Bulk Export] Init:', s);
     updateButtons();
     if (s.phase !== PHASE.IDLE)
-      log(`Resuming: phase=${s.phase}, folder=${s.currentFolderIndex}, course=${s.currentCourseIndex}, format=${s.currentFormatIndex}`, 'info');
+      log(`Resuming: phase=${s.phase}, folder=${s.currentFolderIndex}, course=${s.currentCourseIndex}`, 'info');
 
     if (s.phase !== PHASE.IDLE) document.body.classList.add('rbe-export-active');
 

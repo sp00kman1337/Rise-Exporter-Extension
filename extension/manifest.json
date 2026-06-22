@@ -22,7 +22,5 @@
     "16":  "icons/icon16.png",
     "48":  "icons/icon48.png",
     "128": "icons/icon128.png"
-  },
-
-  "update_url": "https://raw.githubusercontent.com/sp00kman1337/Rise-Exporter-Extension/main/extension/update.xml"
+  }
 }
