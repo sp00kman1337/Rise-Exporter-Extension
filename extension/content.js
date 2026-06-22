@@ -493,7 +493,7 @@
         <div id="rbe-footer">
           <a href="https://github.com/sp00kman1337/Rise-Exporter-Extension" target="_blank">GitHub</a>
           <span>|</span>
-          <a href="mailto:jpelupessy@onestreamsoftware.com">Jay Pelupessy</a>
+          <a href="mailto:jpelupessy@onestreamsoftware.com">Contact</a>
         </div>
       </div>`;
     document.body.appendChild(panel);
