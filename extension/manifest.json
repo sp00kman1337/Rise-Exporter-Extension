@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Rise 360 Bulk Export",
+  "version": "1.0",
+  "description": "Bulk export Rise 360 courses as Web (HTML) and/or LMS (SCORM) zips from selected folders.",
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://rise.articulate.com/*",
+        "https://app.rise.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "permissions": ["storage"],
+
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "update_url": "https://raw.githubusercontent.com/sp00kman1337/Rise-Exporter/main/extension/update.xml"
+}
