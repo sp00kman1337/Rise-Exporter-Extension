@@ -11,17 +11,15 @@ as Web (HTML) and/or LMS (SCORM) packages across multiple subfolders.
 
 ## Installation
 
-This extension is distributed as an unpacked extension. No store listing required.
-
-1. Download or clone this repository
+1. Download `rise_file_exporter_v1.0.zip` from the repository and extract it
 2. Open `edge://extensions` (or `chrome://extensions`)
 3. Enable **Developer mode** (toggle, top-right)
-4. Click **Load unpacked** → select the `extension/` folder
+4. Click **Load unpacked** → select the `extension/` folder from the extracted zip
 5. The extension is now active — navigate to Rise 360 and the panel will appear automatically
 
 ## Updating
 
-1. Pull the latest code from GitHub (or download the updated files)
+1. Download the latest zip from the repository and extract it, replacing your existing `extension/` folder
 2. Open `edge://extensions` (or `chrome://extensions`)
 3. Find **Rise 360 Bulk Export** and click the **reload** icon (↺)
 
