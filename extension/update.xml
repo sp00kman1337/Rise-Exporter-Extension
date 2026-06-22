@@ -25,6 +25,6 @@
   <app appid='piomggcofepggjpkeafdpmdcmilageif'>
     <updatecheck
       version='1.0'
-      codebase='https://raw.githubusercontent.com/sp00kman1337/Rise-Exporter/main/rise_file_exporter_v1.0.crx' />
+      codebase='https://raw.githubusercontent.com/sp00kman1337/Rise-Exporter-Extension/main/rise_file_exporter_v1.0.crx' />
   </app>
 </gupdate>
