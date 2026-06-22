@@ -57,7 +57,6 @@ Rise's default file naming.
 |---|---|
 | Web (HTML) | Publishes each course as a standalone HTML zip |
 | LMS (SCORM) | Publishes each course as a SCORM 1.2 package with preconfigured settings |
-| Both | Runs both exports for every course in sequence |
 
 ### LMS Settings Applied Automatically
 
